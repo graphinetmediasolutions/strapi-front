@@ -1,0 +1,62 @@
+import Image from "next/image";
+import { query } from "@/lib/ApolloClient";
+import { HOME_PAGE_QUERY_NEW } from "@/graphql/homepage";
+import {Locale} from 'next-intl';
+// import whatDoyouSeekSection from "@/components/WhatDoYouSeekSection";
+import WhatDoYouSeekSection from "@/components/WhatDoYouSeekSection";
+import AccordionSection from "@/components/Accordion";
+
+type Props = {
+  params: Promise<{locale: Locale}>;
+};
+
+export default async function Home({ params }: Props) {
+
+  const { locale } = await params;
+  const { data } = await query({
+    query: HOME_PAGE_QUERY_NEW,
+    variables: { locale: locale },
+    fetchPolicy: "no-cache",
+  });
+
+  const banner = data?.homePage?.banner;
+
+  return (
+    <div>
+      <section className="relative w-full h-[400px] flex items-center justify-center bg-gray-900 overflow-hidden">
+        {/* Banner Image */}
+        {banner?.image?.url && (
+          <Image
+            src={`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${banner.image.url}`}
+            alt={banner.title}
+            fill
+            className="object-cover opacity-70 z-10"
+            priority
+          />
+        )}
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+        {/* Banner Content */}
+        <div className="relative z-10 text-center px-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
+            {banner?.title}
+          </h1>
+          {banner?.video?.url && (
+            <a
+              href={banner.video.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-4 px-6 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 transition"
+            >
+              Watch Video
+            </a>
+          )}
+        </div>
+      </section>
+      <WhatDoYouSeekSection section={data.homePage.sections[0]} />
+      <AccordionSection />
+    </div>
+  );
+}

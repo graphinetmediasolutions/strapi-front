@@ -1,0 +1,11 @@
+
+{
+  "HomePage": {
+    "title": "नमस्ते दुनिया!",
+    "about": "अबाउट पेज पर जाएं"
+  },
+  "LocaleSwitcher": {
+    "label": "Select language",
+   "locale": "{locale, select, en {English} hi {हिंदी} other {Unknown}}"
+  }
+}
