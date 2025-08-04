@@ -10,7 +10,7 @@ import {
 // have a function to create a client for you
 function makeClient() {
   const httpLink = new HttpLink({
-    uri: "http://localhost:1337/graphql",
+    uri: process.env.NEXT_PUBLIC_STRAPI_GRAPHQL_API,
     fetchOptions: {},
   });
 

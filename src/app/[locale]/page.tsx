@@ -19,6 +19,8 @@ export default async function Home({ params }: Props) {
     fetchPolicy: "no-cache",
   });
 
+  console.log("Home Page Data:", data);
+
   const banner = data?.homePage?.banner;
 
   return (
