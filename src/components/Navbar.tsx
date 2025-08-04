@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
   const roots = data?.renderNavigation;
 
   return (
-     <nav className="bg-gray-900 py-3 flex items-center justify-center px-4">
+     <nav className="bg-gray-900 py-3 flex items-center justify-center px-6">
       <div className="container mx-auto px-4">
         <NavigationMenu>
           <NavigationMenuList>
