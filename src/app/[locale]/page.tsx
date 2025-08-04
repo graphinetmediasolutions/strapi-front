@@ -10,6 +10,53 @@ type Props = {
   params: Promise<{locale: Locale}>;
 };
 
+type Localization = {
+  locale: string;
+  // add other properties if needed, e.g.:
+  title?: string;
+  slug?: string;
+};
+
+
+
+type Image = {
+  url: string;
+};
+
+type SeekCard = {
+  icon: Image;
+  image: Image;
+  title: string;
+  description: string;
+};
+
+type Section = {
+  __typename: "ComponentComponentsSectionWhatYouSeek";
+  id: string;
+  mainHeading: string;
+  leftSubHeading: string;
+  rightSubHeading: string;
+  SeekCard: SeekCard[];
+};
+
+type Banner = {
+  title: string;
+  image: Image;
+};
+
+type HomePageLocalization = {
+  locale: string;
+  banner: Banner;
+  sections: Section[];
+};
+
+type HomePageData = {
+  locale: string;
+  banner: Banner;
+  localizations: HomePageLocalization[];
+  sections: Section[];
+};
+
 export default async function Home({ params }: Props) {
 
   const { locale } = await params;
@@ -23,12 +70,12 @@ export default async function Home({ params }: Props) {
 
  // --- Fallback Logic ---
   // 1. Get the English data, which is always the main entry.
-  const englishData = data?.homePage;
+  const englishData: HomePageData | undefined = data?.homePage;
 
   // 2. Find the data for the requested locale in the 'localizations' array.
-  const localizedData = englishData?.localizations.find(
-    (localization: any) => localization.locale === locale
-  );
+const localizedData: HomePageLocalization | undefined = englishData?.localizations.find(
+  (localization: Localization) => localization.locale === locale
+);
 
 console.log("Localized Data:", localizedData);
 
@@ -67,7 +114,7 @@ console.log("section" , sections);
           <h1 className="text-3xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">
             {banner?.title}
           </h1>
-          {banner?.video?.url && (
+          {/* {banner?.video?.url && (
             <a
               href={banner.video.url}
               target="_blank"
@@ -76,7 +123,7 @@ console.log("section" , sections);
             >
               Watch Video
             </a>
-          )}
+          )} */}
         </div>
       </section>
       {

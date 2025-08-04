@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { useQuery } from "@apollo/client";
 import { usePathname } from "next/navigation";
 import { MAIN_MENU_QUERY } from "@/graphql/mainMenu";

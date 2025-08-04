@@ -2,6 +2,7 @@
 import React from 'react'
 import { GET_SCHOOLS_LIST } from '@/graphql/accordion';
 import { useQuery } from '@apollo/client';
+import Image from 'next/image';
 
 import {
     Accordion,
@@ -106,7 +107,9 @@ const AccordionSection: React.FC = () => {
                                                         className="p-4 border rounded-md shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-4"
                                                     >
                                                         {iconUrl && (
-                                                            <img
+                                                            <Image
+                                                            width={20}
+                                                            height={20}
                                                                 src={iconUrl}
                                                                 alt={course.title}
                                                                 className="w-20 h-20 object-cover rounded-md"
