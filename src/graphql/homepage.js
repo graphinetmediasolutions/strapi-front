@@ -39,51 +39,66 @@ query HomePage {
 
 export const HOME_PAGE_QUERY_NEW = gql`
 
-query Banner($locale: I18NLocaleCode) {
-  homePage(locale: $locale) {
-    banner {
-      title
-      image {
-        url
-      }
-      video {
-        url
-      }
-    }
-    locale
-    documentId
-    localizations {
+query HomePageWithLocalizations {
+    # Fetch the English homepage entry as the main object
+    homePage(locale: "en") {
       banner {
         title
-        id
         image {
           url
         }
-        video {
-          url
-        }
       }
-    }
-    sections {
-      ... on ComponentComponentsSectionWhatYouSeek {
-        id
-        mainHeading
-        leftSubHeading
-        rightSubHeading
-        SeekCard {
-          icon {
-            url
-          }
+      locale
+      # Get all localizations of the *entire homePage entry*
+      localizations {
+        locale
+        banner {
+          title
           image {
             url
           }
-          title
-          description
+        }
+        # Sections are localized with the entire entry, so you query for them here
+        sections {
+          ... on ComponentComponentsSectionWhatYouSeek {
+            id
+            mainHeading
+            leftSubHeading
+            rightSubHeading
+            SeekCard {
+              icon {
+                url
+              }
+              image {
+                url
+              }
+              title
+              description
+            }
+          }
+        }
+      }
+      # The main sections are from the English version
+      sections {
+        ... on ComponentComponentsSectionWhatYouSeek {
+          id
+          mainHeading
+          leftSubHeading
+          rightSubHeading
+          SeekCard {
+            icon {
+              url
+            }
+            image {
+              url
+            }
+            title
+            description
+          }
         }
       }
     }
   }
-}
 `
 
 // You can export other homepage-related queries here too

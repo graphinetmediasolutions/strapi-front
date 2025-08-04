@@ -1,7 +1,6 @@
 // CardComponent.jsx
 import Image from "next/image";
 
-import { getStrapiMedia } from "@/lib/media";
 
 interface CardComponentProps {
   imageSrc: string | null;  // Accepts either a string, a static import, or null
@@ -15,8 +14,6 @@ export default function CardComponent({
 
 }: CardComponentProps) {
 
-  const iconUrl = getStrapiMedia(iconSrc);
-  const imageUrl = getStrapiMedia(imageSrc);
 
   return (
     <div className="relative rounded-lg shadow-md bg-white overflow-hidden">
@@ -24,9 +21,9 @@ export default function CardComponent({
 
 
       {
-        imageUrl && <Image
+        imageSrc && <Image
           className="w-full h-[227px] object-cover object-center rounded-lg sm:h-[250px]"
-          src={imageUrl }
+          src={imageSrc }
           alt={heading || "card image"}
           width={500}
           height={500}
@@ -41,10 +38,10 @@ export default function CardComponent({
           <div className="flex items-center justify-between">
             <h3 className="text-white m-0 font-mulish font-medium">{heading}</h3>
             {/* Desktop Icon */}
-            {iconUrl && (
+            {iconSrc && (
               <Image
                 className="hidden lg:block relative -top-7 right-2 w-9 h-11"
-                src={iconUrl }
+                src={iconSrc }
                 alt="Desktop Icon"
                 width={36}
                 height={45}

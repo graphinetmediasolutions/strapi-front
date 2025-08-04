@@ -21,7 +21,29 @@ export default async function Home({ params }: Props) {
 
   console.log("Home Page Data:", data);
 
-  const banner = data?.homePage?.banner;
+ // --- Fallback Logic ---
+  // 1. Get the English data, which is always the main entry.
+  const englishData = data?.homePage;
+
+  // 2. Find the data for the requested locale in the 'localizations' array.
+  const localizedData = englishData?.localizations.find(
+    (localization: any) => localization.locale === locale
+  );
+
+console.log("Localized Data:", localizedData);
+
+  // 3. Use the localized data if it exists, otherwise fall back to English.
+  const finalData = localizedData || englishData;
+
+
+
+  // Now use `finalData` for all your rendering.
+  const banner = finalData?.banner;
+
+const sections = finalData?.sections || [];
+
+console.log("section" , sections);
+
 
   return (
     <div>
@@ -29,7 +51,7 @@ export default async function Home({ params }: Props) {
         {/* Banner Image */}
         {banner?.image?.url && (
           <Image
-            src={`${process.env.NEXT_PUBLIC_STRAPI_BASE_URL}${banner.image.url}`}
+            src={banner?.image?.url}
             alt={banner.title}
             fill
             className="object-cover opacity-70 z-10"
@@ -57,7 +79,10 @@ export default async function Home({ params }: Props) {
           )}
         </div>
       </section>
-      <WhatDoYouSeekSection section={data.homePage.sections[0]} />
+      {
+        sections[0] &&  <WhatDoYouSeekSection section={sections[0]} />
+      }
+     
       <AccordionSection />
     </div>
   );

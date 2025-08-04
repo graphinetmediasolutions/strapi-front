@@ -18,7 +18,7 @@ export function getStrapiMedia(url : string | null | undefined) {
 
   // Get the base URL from environment variables
   // In Next.js, NEXT_PUBLIC_ variables are available on both server and client
-  const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_BASE_URL;
+  const strapiBaseUrl = process.env.NEXT_PUBLIC_STRAPI_ASSETS_URL;
 
   // If the base URL is not configured, log an error and return null
   if (!strapiBaseUrl) {
